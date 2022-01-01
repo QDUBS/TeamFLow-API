@@ -1,12 +1,10 @@
-import {
-  Injectable,
-  UnauthorizedException
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LoginDto } from './dto/auth-dto';
 import { User } from './entities/user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UserService {
@@ -28,5 +26,16 @@ export class UserService {
       const { password, ...user } = single_user;
       return this.jwtService.sign(user);
     }
+  }
+
+  async createUser(createUserDto: CreateUserDto) {
+    const { username, password } = createUserDto;
+
+    const userEntity = this.userRepository.create({
+      username,
+      password,
+    });
+
+    return await this.userRepository.save(userEntity);
   }
 }

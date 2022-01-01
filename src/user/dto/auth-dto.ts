@@ -1,5 +1,5 @@
-import { Field } from "@nestjs/graphql";
-import { MinLength } from "class-validator";
+import { Field } from '@nestjs/graphql';
+import { MinLength } from 'class-validator';
 
 export class LoginDto {
   @Field()

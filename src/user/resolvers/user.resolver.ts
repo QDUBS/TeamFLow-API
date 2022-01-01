@@ -5,6 +5,7 @@ import { User } from '../entities/user.entity';
 import { JwtAuthGuard } from '../guards/jwt.guard';
 import { LocalGuard } from '../guards/local.guard';
 import { UserService } from '../user.service';
+import { CreateUserDto } from '../dto/create-user.dto';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -24,5 +25,13 @@ export class UserResolver {
   @UseGuards(JwtAuthGuard)
   async status(@Req() request: Request) {
     return request.user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Mutation(() => User)
+  async createUser(
+    @Args('createUserDto') createUserDto: CreateUserDto,
+  ) {
+    return this.userService.createUser(createUserDto);
   }
 }
