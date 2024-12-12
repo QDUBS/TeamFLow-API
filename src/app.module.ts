@@ -21,7 +21,10 @@ import { UserModule } from './user/user.module';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: [Department, SubDepartment],
-        synchronize: true, // Set to false in production, use migrations
+        synchronize: false,
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
       inject: [ConfigService],
     }),
