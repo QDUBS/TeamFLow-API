@@ -16,7 +16,7 @@ export class DepartmentResolver {
   async getAllDepartments() {
     return await this.departmentService.getAllDepartments();
   }
-
+ 
   // Get a department
   @UseGuards(JwtAuthGuard)
   @Query(() => Department, { nullable: true })
