@@ -1,5 +1,7 @@
 An implementation of the backend part of TeamFlow, a full-stack application for the management of departments and sub-departments for an organization. This project was built using Nest.js, GraphQL, TypeORM and PostgreSQL.
 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 STRUCTURE
 The project contains two main sections:
 
@@ -8,6 +10,7 @@ The project contains two main sections:
 2. Departments: handles the display of existing departments, creation of new departments and sub-departments. It also handles to updating of exisiting departments as well as sub-departments.
 
 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 SETUP, COMPILATION AND USAGE
 Below are a set of steps to follow when setting up the project:
 a. Clone the repository
