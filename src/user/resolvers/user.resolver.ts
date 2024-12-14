@@ -20,7 +20,7 @@ export class UserResolver {
   ) {
     return request.user;
   }
-
+ 
   @Query(() => User)
   @UseGuards(JwtAuthGuard)
   async status(@Req() request: Request) {
