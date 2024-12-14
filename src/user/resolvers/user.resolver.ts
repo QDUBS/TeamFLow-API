@@ -20,18 +20,15 @@ export class UserResolver {
   ) {
     return request.user;
   }
- 
+
   @Query(() => User)
   @UseGuards(JwtAuthGuard)
   async status(@Req() request: Request) {
     return request.user;
   }
 
-  @UseGuards(JwtAuthGuard)
   @Mutation(() => User)
-  async createUser(
-    @Args('createUserDto') createUserDto: CreateUserDto,
-  ) {
+  async createUser(@Args('createUserDto') createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
   }
 }

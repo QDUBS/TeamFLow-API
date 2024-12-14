@@ -16,3 +16,4 @@ export class SubDepartment {
   @ManyToOne(() => Department, (department) => department.subDepartments)
   department: Department;
 }
+

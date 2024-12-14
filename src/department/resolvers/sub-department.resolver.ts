@@ -25,17 +25,16 @@ export class SubDepartmentResolver {
     @Args('createSubDepartmentData')
     createSubDepartmentDto: CreateSubDepartmentDto,
   ) {
-    const newSubDepartment =
-      await this.subDepartmentService.createSubDepartment(
-        createSubDepartmentDto,
-      );
-    return newSubDepartment;
+    return this.subDepartmentService.createSubDepartment(
+      createSubDepartmentDto,
+    );
   }
 
   // Update a sub-department
   @UseGuards(JwtAuthGuard)
   @Mutation(() => SubDepartment)
   async updateSubDepartment(
+    @Args('id') id: number,
     @Args('updateSubDepartmentDto')
     updateSubDepartmentDto: UpdateSubDepartmentDto,
   ) {
@@ -44,7 +43,7 @@ export class SubDepartmentResolver {
     }
 
     return await this.subDepartmentService.updateSubDepartment(
-      updateSubDepartmentDto.id,
+      id,
       updateSubDepartmentDto,
     );
   }

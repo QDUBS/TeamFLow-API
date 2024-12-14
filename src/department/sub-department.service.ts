@@ -27,26 +27,26 @@ export class SubDepartmentService {
     return department;
   }
 
-  async createSubDepartment(createSubDepartmentDto: CreateSubDepartmentDto) {
-    const department = await this.departmentRepository.findOneBy({
-      name: createSubDepartmentDto.name,
+  async createSubDepartment(
+    createSubDepartmentDto: CreateSubDepartmentDto,
+  ): Promise<SubDepartment> {
+    const { departmentId, ...subDepartmentData } = createSubDepartmentDto;
+
+    const department = await this.departmentRepository.findOne({
+      where: { id: departmentId },
+      relations: ['subDepartments'],
     });
 
     if (!department) {
-      throw new NotFoundException();
+      throw new NotFoundException('Department does not exist');
     }
 
-    const newSubDepartment = this.subDepartmentRepository.create(
-      createSubDepartmentDto,
-    );
+    const subDepartment = this.subDepartmentRepository.create({
+      ...subDepartmentData,
+      department,
+    });
 
-    const savedSubDepartment =
-      await this.subDepartmentRepository.save(newSubDepartment);
-
-    department.subDepartments = [savedSubDepartment];
-    await this.subDepartmentRepository.save(department);
-
-    return savedSubDepartment;
+    return this.subDepartmentRepository.save(subDepartment);
   }
 
   async updateSubDepartment(
@@ -74,7 +74,7 @@ export class SubDepartmentService {
       throw new NotFoundException('Sub-department not found');
     }
 
-    await this.subDepartmentRepository.remove(subDepartment);
+    await this.subDepartmentRepository.delete(subDepartment);
     return true;
   }
 }

@@ -17,15 +17,17 @@ export class DepartmentService {
   ) {}
 
   async getAllDepartments() {
-    return this.departmentRepository.find();
+    return this.departmentRepository.find({
+      relations: ['subDepartments'],
+    });
   }
 
   async getDepartment(id: number) {
-    const department = await this.departmentRepository.findOneBy({
-      id,
+    const department = await this.departmentRepository.findOne({
+      where: { id },
+      relations: ['subDepartments'],
     });
 
-    // Check if record does exist
     if (!department) {
       throw new HttpException('Department does not exist', 404);
     }
@@ -34,26 +36,30 @@ export class DepartmentService {
   }
 
   async createDepartment(createDepartmentDto: CreateDepartmentDto) {
-    const { name, subDepartments } = createDepartmentDto;
+    const { subDepartments, ...departmentData } = createDepartmentDto;
 
-    const departmentEntity = this.departmentRepository.create({
-      name,
-    });
+    const department = this.departmentRepository.create(departmentData);
+
+    console.log('Created department');
 
     if (subDepartments && subDepartments.length > 0) {
-      const subDeptEntities = subDepartments.map((subDept) =>
-        this.subDepartmentRepository.create({
-          name: subDept.name,
-          department: departmentEntity,
-        }),
-      );
+      const subDeptEntities = subDepartments.map((subDept) => {
+        const subDepartment = this.subDepartmentRepository.create(subDept);
+        subDepartment.department = department;
+        return subDepartment;
+      });
+      console.log('About to create sub department', subDeptEntities);
 
-      await this.subDepartmentRepository.save(subDeptEntities);
+      console.log('Created sub department');
 
-      departmentEntity.subDepartments = subDeptEntities;
+      department.subDepartments = subDeptEntities;
+
+      console.log('Attached subDepartment to its parent department');
     }
 
-    return await this.departmentRepository.save(departmentEntity);
+    console.log('Saving final department record');
+
+    return await this.departmentRepository.save(department);
   }
 
   async updateDepartment(id: number, updateDepartmentDto: UpdateDepartmentDto) {
@@ -68,23 +74,20 @@ export class DepartmentService {
     return await this.departmentRepository.save(department);
   }
 
-  async deleteDepartment(id: number) {
+  async deleteDepartment(id: number): Promise<boolean> {
     const department = await this.departmentRepository.findOne({
       where: { id },
+      relations: ['subDepartments'],
     });
 
     if (!department) {
-      throw new NotFoundException('Department does not exist');
+      throw new NotFoundException('Department not found');
     }
 
-    const sub_department = await this.subDepartmentRepository.findOneBy({
-      name: department.name,
-    });
+    await this.subDepartmentRepository.delete({ department: department });
 
-    await this.departmentRepository.remove(department);
-    await this.subDepartmentRepository.remove(sub_department);
+    await this.departmentRepository.delete(id);
 
     return true;
   }
 }
- 

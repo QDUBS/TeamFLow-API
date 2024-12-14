@@ -6,14 +6,14 @@ import { SubDepartment } from './sub-department.entity';
 @ObjectType()
 export class Department {
   @PrimaryGeneratedColumn()
-  @Field((type) => Int)
+  @Field((type) => Int, { nullable: true })
   id: number;
 
   @Column()
-  @Field()
+  @Field({ nullable: true })
   name: string;
 
-  @OneToMany(() => SubDepartment, (subDept) => subDept.department, {
+  @OneToMany(() => SubDepartment, (subDepartment) => subDepartment.department, {
     cascade: true,
   })
   @Field(() => [SubDepartment], { nullable: true })

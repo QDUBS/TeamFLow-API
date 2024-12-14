@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DepartmentModule } from './department/department.module';
 import { Department } from './department/entities/department.entity';
 import { SubDepartment } from './department/entities/sub-department.entity';
+import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -20,7 +21,7 @@ import { UserModule } from './user/user.module';
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [Department, SubDepartment],
+        entities: [User, Department, SubDepartment],
         synchronize: true,
         ssl: {
           rejectUnauthorized: false,
@@ -28,7 +29,7 @@ import { UserModule } from './user/user.module';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([Department, SubDepartment]),
+    TypeOrmModule.forFeature([User, Department, SubDepartment]),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
