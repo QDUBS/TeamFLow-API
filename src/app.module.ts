@@ -22,9 +22,9 @@ import { UserModule } from './user/user.module';
         database: configService.get('DB_NAME'),
         entities: [Department, SubDepartment],
         synchronize: false,
-        // ssl: {
-        //   rejectUnauthorized: false,
-        // },
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
       inject: [ConfigService],
     }),
