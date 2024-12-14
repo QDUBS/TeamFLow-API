@@ -38,7 +38,32 @@ h. You can also find the app live on - https://teamflow-api.onrender.com/graphql
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 USAGE:
 
-Using the queries below, you can perform CRUD operations for departments and sub-departments
+Using the queries below, you can perform CRUD operations for users, departments and sub-departments
+
+For Users:
+
+1. Create new user
+
+mutation {
+
+  createUser(createUserDto: {
+  
+    username: "Qdub$",
+    
+    password: "12345"
+  
+  }) {
+  
+    id
+    
+    username,
+    
+    password
+  
+  }
+
+}
+
 
 For Departments:
 
