@@ -5,30 +5,31 @@ import { DepartmentService } from '../department.service';
 import { CreateSubDepartmentDto } from '../dto/create-sub-department.dto';
 import { UpdateDepartmentDto } from '../dto/update-department.dto';
 import { Department } from '../entities/department.entity';
+import { CreateDepartmentDto } from '../dto/create-department.dto';
 
 @Resolver(() => Department)
 export class DepartmentResolver {
   constructor(private departmentService: DepartmentService) {}
 
   // Get all departments
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => Department)
   async getAllDepartments() {
     return await this.departmentService.getAllDepartments();
   }
  
   // Get a department
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => Department, { nullable: true })
   async getDepartment(@Args('id', { type: () => Int }) id: number) {
     return await this.departmentService.getDepartment(id);
   }
 
   // Create a department
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => Department)
   async createDepartment(
-    @Args('createDepartmentDto') createDepartmentDto: CreateSubDepartmentDto,
+    @Args('createDepartmentDto') createDepartmentDto: CreateDepartmentDto,
   ) {
     return this.departmentService.createDepartment(createDepartmentDto);
   }

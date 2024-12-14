@@ -10,10 +10,6 @@ export class SubDepartment {
   id: number;
 
   @Column()
-  @Field(() => Int)
-  departmentId: number;
-
-  @Column()
   @Field()
   name: string;
 

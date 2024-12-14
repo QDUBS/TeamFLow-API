@@ -21,7 +21,7 @@ import { UserModule } from './user/user.module';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
         entities: [Department, SubDepartment],
-        synchronize: false,
+        synchronize: true,
         ssl: {
           rejectUnauthorized: false,
         },

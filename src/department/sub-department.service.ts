@@ -16,9 +16,9 @@ export class SubDepartmentService {
     private subDepartmentRepository: Repository<SubDepartment>,
   ) {}
 
-  async getSubDepartment(departmentId: number) {
+  async getSubDepartment(name: string) {
     const department = await this.subDepartmentRepository.findOneBy({
-      departmentId,
+      name,
     });
     if (!department) {
       throw new NotFoundException('Department does not exist');
@@ -29,7 +29,7 @@ export class SubDepartmentService {
 
   async createSubDepartment(createSubDepartmentDto: CreateSubDepartmentDto) {
     const department = await this.departmentRepository.findOneBy({
-      id: createSubDepartmentDto.departmentId,
+      name: createSubDepartmentDto.name,
     });
 
     if (!department) {

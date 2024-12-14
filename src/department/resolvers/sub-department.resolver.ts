@@ -14,8 +14,8 @@ export class SubDepartmentResolver {
   // Get a sub-department
   @UseGuards(JwtAuthGuard)
   @Query(() => Department, { nullable: true })
-  async getSubDepartment(@Args('id', { type: () => Int }) id: number) {
-    return await this.subDepartmentService.getSubDepartment(id);
+  async getSubDepartment(@Args('name', { type: () => String }) name: string) {
+    return await this.subDepartmentService.getSubDepartment(name);
   }
 
   // Create a sub-department

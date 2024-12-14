@@ -34,14 +34,24 @@ export class DepartmentService {
   }
 
   async createDepartment(createDepartmentDto: CreateDepartmentDto) {
-    const { subDepartments, ...rest } = createDepartmentDto;
+    const { name, subDepartments } = createDepartmentDto;
 
     const departmentEntity = this.departmentRepository.create({
-      ...rest,
-      subDepartments: subDepartments?.map((subDept) => ({
-        ...subDept,
-      })),
+      name,
     });
+
+    if (subDepartments && subDepartments.length > 0) {
+      const subDeptEntities = subDepartments.map((subDept) =>
+        this.subDepartmentRepository.create({
+          name: subDept.name,
+          department: departmentEntity,
+        }),
+      );
+
+      await this.subDepartmentRepository.save(subDeptEntities);
+
+      departmentEntity.subDepartments = subDeptEntities;
+    }
 
     return await this.departmentRepository.save(departmentEntity);
   }
@@ -68,7 +78,7 @@ export class DepartmentService {
     }
 
     const sub_department = await this.subDepartmentRepository.findOneBy({
-      departmentId: department.id,
+      name: department.name,
     });
 
     await this.departmentRepository.remove(department);

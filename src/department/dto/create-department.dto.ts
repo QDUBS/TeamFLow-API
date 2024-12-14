@@ -12,4 +12,3 @@ export class CreateDepartmentDto {
   @ValidateNested({ each: true })
   subDepartments?: CreateSubDepartmentDto[];
 }
- 
