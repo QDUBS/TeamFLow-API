@@ -43,82 +43,150 @@ Using the queries below, you can perform CRUD operations for departments and sub
 For Departments:
 
 1. Get all departments
+
 query {
+
   getAllDepartments {
+  
     id
+    
     name
+    
     subDepartments {
+    
       name
+    
     }
+  
   }
+
 }
 
-2. Get single department
+
+3. Get single department
+
 query {
+
   getDepartment(id: 6) {
+  
     id
+    
     name
+    
     subDepartments {
+    
       name
+    
     }
+  
   }
+
 }
 
-3. Create a department without sub-departments
+
+4. Create a department without sub-departments
+
 mutation {
+
   createDepartment(createDepartmentDto: {
+  
     name:"HR department",
+    
     subDepartments: []
+  
   }) {
+  
     id
+    
     name
+    
     subDepartments {
+    
       id
+      
       name
+   
     }
+    
   }
+
 }
 
-4. Create a department with sub-departments
+
+5. Create a department with sub-departments
+
 mutation {
+
   createDepartment(createDepartmentDto: {
+  
     name:"Medical department",
+    
     subDepartments: [
+    
       {
+      
         name: "Nurses"
+      
       },
+      
       {
+      
         name: "Doctors"
+      
       },
+      
       {
+      
         name: "Lab Attendants"
+      
       }
+    
     ]
+  
   }) {
+  
     id
+    
     name
+   
     subDepartments {
+    
       id
+      
       name
+    
     }
+  
   }
+
 }
 
-5. Update a department using the department ID
+6. Update a department using the department ID
+
 mutation {
+
   updateDepartment(id: 6, updateDepartmentDto: {
+  
     name:"Healthcare department"
+  
   }) {
+  
     id
+    
     name
+  
   }
+
 }
 
-6. Delete a department using the department ID
+
+7. Delete a department using the department ID
+
 mutation {
-  deleteDepartment(id: 2)
-}
 
+  deleteDepartment(id: 2)
+
+}
 
 For Sub-Departments:
 
