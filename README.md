@@ -190,4 +190,62 @@ mutation {
 
 For Sub-Departments:
 
+1. Get single sub-department
 
+query {
+
+  getSubDepartment(name: "BA") {
+  
+    name
+  
+  }
+
+}
+
+2. Create a sub-department
+
+mutation {
+
+  createSubDepartment(createSubDepartmentData: {
+  
+    name: "New SubDepartment",
+    
+    departmentId: 1
+  
+  }) {
+  
+    id
+    
+    name
+  
+  }
+
+}
+
+
+3. Update a sub-department using the sub-department ID
+
+mutation {
+
+  updateSubDepartment(id: 13, updateSubDepartmentDto: {
+  
+    name:"New New Sub Department"
+  
+  }) {
+  
+    id
+    
+    name
+  
+  }
+
+}
+
+
+4. Delete a sub-department using the sub-department ID
+
+mutation {
+
+  deleteSubDepartment(id: 10)
+
+}
