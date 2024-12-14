@@ -14,7 +14,7 @@ The project contains two main sections:
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
-SETUP, COMPILATION AND USAGE:
+SETUP, COMPILATION:
 
 Below are a set of steps to follow when setting up the project:
 
@@ -32,5 +32,94 @@ f. Run the server in watch mode using the command "npm run start:prod
 
 g. And voila!!
 
-h. You can also find the app live on - https://teamflow-api.onrender.com
+h. You can also find the app live on - https://teamflow-api.onrender.com/graphql
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+USAGE:
+
+Using the queries below, you can perform CRUD operations for departments and sub-departments
+
+For Departments:
+
+1. Get all departments
+query {
+  getAllDepartments {
+    id
+    name
+    subDepartments {
+      name
+    }
+  }
+}
+
+2. Get single department
+query {
+  getDepartment(id: 6) {
+    id
+    name
+    subDepartments {
+      name
+    }
+  }
+}
+
+3. Create a department without sub-departments
+mutation {
+  createDepartment(createDepartmentDto: {
+    name:"HR department",
+    subDepartments: []
+  }) {
+    id
+    name
+    subDepartments {
+      id
+      name
+    }
+  }
+}
+
+4. Create a department with sub-departments
+mutation {
+  createDepartment(createDepartmentDto: {
+    name:"Medical department",
+    subDepartments: [
+      {
+        name: "Nurses"
+      },
+      {
+        name: "Doctors"
+      },
+      {
+        name: "Lab Attendants"
+      }
+    ]
+  }) {
+    id
+    name
+    subDepartments {
+      id
+      name
+    }
+  }
+}
+
+5. Update a department using the department ID
+mutation {
+  updateDepartment(id: 6, updateDepartmentDto: {
+    name:"Healthcare department"
+  }) {
+    id
+    name
+  }
+}
+
+6. Delete a department using the department ID
+mutation {
+  deleteDepartment(id: 2)
+}
+
+
+For Sub-Departments:
+
 
