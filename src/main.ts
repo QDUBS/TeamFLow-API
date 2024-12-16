@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import * as dotenv from 'dotenv';
+import * as cors from 'cors';
 import { AppModule } from './app.module';
 
 dotenv.config();
@@ -17,17 +18,18 @@ async function bootstrap() {
       }),
     );
 
-    app.enableCors({
-      origin: ['http://localhost:3000', 'https://team-flow-one.vercel.app'],
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
-      allowedHeaders: ['Content-Type'],
-    });
+    // app.enableCors({
+    //   origin: ['http://localhost:3000', 'https://team-flow-one.vercel.app'],
+    //   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    //   allowedHeaders: ['Content-Type', 'Authorization'],
+    // });
 
-    const port = process.env.PORT || 5000;
-    await app.listen(port, '0.0.0.0');
-    console.log(
-      `Application running on port ${port}`,
-    );
+    // const port = process.env.PORT || 5000;
+    // await app.listen(port, '0.0.0.0');
+    // console.log(
+    //   `Application running on port ${port}`,
+    // );
+    app.use(cors());
   } catch (error) {
     console.error('Application startup error:', error);
   }
