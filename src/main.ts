@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import * as csurf from 'csurf';
+import * as session from 'express-session';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -14,13 +15,14 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(csurf({ cookie: { sameSite: true } }));
 
-  app.use((req: any, res: any, next: any) => {
-    const token = req.csrfToken();
-    res.cookie('XSRF-TOKEN', token);
-    res.locals.csrfToken = token;
-
-    next();
-  });
+  app.use(
+    session({
+      secret: `${process.env.JWT}`,
+      resave: false,
+      saveUninitialized: false,
+      cookie: { secure: true }, // Set to true if using HTTPS
+    }),
+  );
   await app.listen(process.env.PORT ?? 5000);
 }
 bootstrap();
