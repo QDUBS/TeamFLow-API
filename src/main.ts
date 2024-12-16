@@ -1,10 +1,7 @@
-import { NestFactory } from '@nestjs/core';
-import * as cookieParser from 'cookie-parser';
-import * as csurf from 'csurf';
-import * as session from 'express-session';
-import { AppModule } from './app.module';
-import * as dotenv from 'dotenv';
 import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import * as dotenv from 'dotenv';
+import { AppModule } from './app.module';
 
 dotenv.config();
 
@@ -23,7 +20,7 @@ async function bootstrap() {
     app.enableCors({
       origin: ['http://localhost:3000', 'https://team-flow-one.vercel.app'],
       methods: ['GET', 'POST', 'PUT', 'DELETE'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
+      allowedHeaders: ['Content-Type'],
     });
 
     const port = process.env.PORT || 5000;
