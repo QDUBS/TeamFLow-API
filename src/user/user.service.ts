@@ -1,10 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { LoginDto } from './dto/auth-dto';
-import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
@@ -31,9 +32,11 @@ export class UserService {
   async createUser(createUserDto: CreateUserDto) {
     const { username, password } = createUserDto;
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const userEntity = this.userRepository.create({
       username,
-      password,
+      password: hashedPassword,
     });
 
     return await this.userRepository.save(userEntity);

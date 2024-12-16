@@ -23,9 +23,9 @@ import { UserModule } from './user/user.module';
         database: configService.get('DB_NAME'),
         entities: [User, Department, SubDepartment],
         synchronize: true,
-        ssl: {
-          rejectUnauthorized: false,
-        },
+        // ssl: {
+        //   rejectUnauthorized: false,
+        // },
       }),
       inject: [ConfigService],
     }),

@@ -12,21 +12,21 @@ export class DepartmentResolver {
   constructor(private departmentService: DepartmentService) {}
 
   // Get all departments
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => [Department])
   async getAllDepartments() {
     return await this.departmentService.getAllDepartments();
   }
 
   // Get a department
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => Department, { nullable: true })
   async getDepartment(@Args('id', { type: () => Int }) id: number) {
     return await this.departmentService.getDepartment(id);
   }
 
   // Create a department
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => Department)
   async createDepartment(
     @Args('createDepartmentDto') createDepartmentDto: CreateDepartmentDto,
@@ -35,7 +35,7 @@ export class DepartmentResolver {
   }
 
   // Update a department
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => Department)
   async updateDepartment(
     @Args('id') id: number,
@@ -52,7 +52,7 @@ export class DepartmentResolver {
   }
 
   // Delete a department
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Mutation(() => Boolean)
   async deleteDepartment(
     @Args('id', { type: () => Int }) id: number,
