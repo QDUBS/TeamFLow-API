@@ -16,16 +16,21 @@ export class UserService {
   ) {}
 
   async validateUser(loginDto: LoginDto) {
+    const { username, password } = loginDto;
+
     const single_user: User = await this.userRepository.findOne({
-      where: { username: loginDto.username },
+      where: { username },
     });
 
     if (!single_user) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    if (loginDto.password === single_user.password) {
+    if (await bcrypt.compare(password, single_user.password)) {
       const { password, ...user } = single_user;
-      return this.jwtService.sign(user);
+
+      return {
+        token: this.jwtService.sign(user, { expiresIn: '1h' }),
+      };
     }
   }
 

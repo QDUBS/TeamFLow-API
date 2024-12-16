@@ -18,7 +18,7 @@ export class UserResolver {
     @Args('password') password: string,
     @Req() request: Request,
   ) {
-    return request.user;
+    return this.userService.validateUser({ username, password });
   }
 
   @Query(() => User)
