@@ -12,9 +12,6 @@ async function bootstrap() {
   //   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   //   allowedHeaders: ['Content-Type', 'Authorization'],
   // });
-  app.use(cookieParser());
-  app.use(csurf({ cookie: { sameSite: true } }));
-
   app.use(
     session({
       secret: `${process.env.JWT}`,
@@ -23,6 +20,7 @@ async function bootstrap() {
       cookie: { secure: true }, // Set to true if using HTTPS
     }),
   );
+  app.use(csurf());
   await app.listen(process.env.PORT ?? 5000);
 }
 bootstrap();
